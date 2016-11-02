@@ -17,13 +17,13 @@ new WebpackDevServer(webpack(config), {
     console.log('Running at http://0.0.0.0:3000');
   });
 
-var usersOnline = 0;
-wss.on('connection', function connection(ws){
+// var usersOnline = 0;
+// wss.on('connection', function connection(ws){
 
-  usersOnline +=1;
+//   usersOnline +=1;
 
-  wss.broadcast({
-    type: 'userCount',
-    data: usersOnline
-  })
-})
+//   wss.broadcast({
+//     type: 'userCount',
+//     data: usersOnline
+//   })
+// })
