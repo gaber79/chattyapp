@@ -2,7 +2,7 @@ import React from 'react';
 
 class Message extends React.Component {
   render() {
-    console.log("Rendering <Message /> ");
+    // console.log("Rendering <Messsage /> ");
     return (
       <div id="message">
         <div className="message">
@@ -10,7 +10,6 @@ class Message extends React.Component {
         <span className="content">{this.props.content} </span>
         </div>
         <div className="message system">
-          Anonymous1 changed their name to nomnom.
         </div>
       </div>
       )
