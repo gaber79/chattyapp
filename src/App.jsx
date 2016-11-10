@@ -7,17 +7,16 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: {
-        // userId: uuid.v1(),
-        name: "Jack"
-      }, // optional. if currentUser is not defined, it means the user is Anonymous
-      messages: []
+      currentUser: { name: "Jack" },
+      messages: [],
+      usersOnline: 0
+
     }
   }
 
   updateMessages(messagevalue) {
 
-    console.log(messagevalue)
+    // console.log(messagevalue)
     const newMessage = { type: 'postMessage', username: this.state.currentUser.name, content: messagevalue }
   
     // this.setState({messages: this.state.messages.concat(newMessage)})
@@ -56,22 +55,27 @@ class App extends Component {
     this.socket = new WebSocket ('ws://localhost:4000/')
 
 
-    const wsConn = this.socket;
-    console.log('das state', this.state);
-    const { currentUser } = this.state;
-    console.log('here is currentuser on connection', currentUser);
-    this.socket.onopen = (event) => {
-      console.log("connected to server!");
-      const payload = JSON.stringify({type: 'NEW_USER', currentUser });
-      wsConn.send(payload)
+    // const wsConn = this.socket;
+    // console.log('das state', this.state);
+    // const { currentUser } = this.state;
+    // console.log('here is currentuser on connection', currentUser);
     
+    this.socket.onopen = (event) => {
+      console.log("connected to server!");    
     }
-      this.socket.onmessage = (event) => {
-        console.log("event ",event)
-        var message = JSON.parse(event.data);
-        console.log("message", message)
-        this.setState({messages: this.state.messages.concat(message)})
-      // this.setState(JSON.parse)
+    
+    this.socket.onmessage = (event) => {
+      console.log("event", event)
+      var message = JSON.parse(event.data);
+      console.log("message", message)
+      console.log(message.userCount)
+      var newCount = message.userCount
+      this.setState({ usersOnline: newCount})
+      this.setState({ messages: this.state.messages.concat(message)})
+
+
+
+    // this.setState(JSON.parse)
     }
   }
 
@@ -83,7 +87,7 @@ class App extends Component {
       <div>
         <nav>
           <h1>Chatty</h1>
-          <h2> Users Online</h2>
+          <h2> {this.state.usersOnline} Users Online</h2>
         </nav>
         <MessageList messages={this.state.messages} />
         <ChatBar userName={this.state.currentUser.name} updateName={ this.updateName.bind(this) } submitName={this.submitName.bind(this)} updateMessages={this.updateMessages.bind(this)} messages={this.state.messages} />
