@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import MessageList from './MessageList.jsx';
 import ChatBar from './ChatBar.jsx';
-import uuid from 'node-uuid'
+import uuid from 'node-uuid';
 
 class App extends Component {
   constructor(props) {
@@ -15,11 +15,7 @@ class App extends Component {
   }
 
   updateMessages(messagevalue) {
-
-    // console.log(messagevalue)
     const newMessage = { type: 'postMessage', username: this.state.currentUser.name, content: messagevalue }
-  
-    // this.setState({messages: this.state.messages.concat(newMessage)})
     this.socket.send(JSON.stringify(newMessage))
   }
 
@@ -32,11 +28,8 @@ class App extends Component {
 
   submitName(name) {
 
-    // console.log(this.state.currentUser.name);
     const oldName = this.state.currentUser.name;
-    // console.log('submitting name!!!!!!', name);
     const newName = name;
-    // console.log('this.state', this.state);
     this.setState({currentUser: { name }});
 
     const userId = this.state.currentUser.userId;
@@ -53,12 +46,6 @@ class App extends Component {
   componentDidMount() {
     // console.log("componentDidMount <App />")
     this.socket = new WebSocket ('ws://localhost:4000/')
-
-
-    // const wsConn = this.socket;
-    // console.log('das state', this.state);
-    // const { currentUser } = this.state;
-    // console.log('here is currentuser on connection', currentUser);
     
     this.socket.onopen = (event) => {
       console.log("connected to server!");    
@@ -72,10 +59,6 @@ class App extends Component {
       var newCount = message.userCount
       this.setState({ usersOnline: newCount})
       this.setState({ messages: this.state.messages.concat(message)})
-
-
-
-    // this.setState(JSON.parse)
     }
   }
 

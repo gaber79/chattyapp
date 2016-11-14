@@ -9,8 +9,6 @@ class Message extends React.Component {
         <span className="username">{this.props.username} </span>
         <span className="content">{this.props.content} </span>
         </div>
-        <div className="message system">
-        </div>
       </div>
       )
   }
